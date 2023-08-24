@@ -1,0 +1,39 @@
+int funky (int n) {
+    var new_n = 0;
+    var a = 6;
+    var b = 17;
+    var c = -5;
+    for (var i = 0; i < n * n; i = i + 1;) {
+        new_n = new_n + a + b + c;
+    }
+    return new_n;
+}
+
+/* Recursively traverse a 2d-array of ints, applying a given function. */
+int traverse(int[][] matrix, (int) -> int f, int rows, int cols, 
+    int curr_row, int curr_col) {
+    if (curr_col >= cols) {
+        return 0;
+    }
+    if (curr_row >= rows) {
+        return 1;
+    }
+    matrix[curr_row][curr_col] = f(matrix[curr_row][curr_col]);
+    if (curr_row == rows - 1 & curr_col == cols - 1) {
+        print_int(matrix[curr_row][curr_col]);
+    }
+    var try_col_traverse = traverse(matrix, f, rows, cols, curr_row, curr_col + 1);
+    if (try_col_traverse == 1) {
+        return 1;
+    }
+    return traverse(matrix, f, rows, cols, curr_row + 1, 0);
+}
+
+int program(int argc, string[] argv) {
+  /* Number printed should be 705672 */
+  var rows = 90;
+  var cols = 110;
+  var matrix = new int[][rows] {id -> new int[cols]{id2 -> id + id2}};
+  var result = traverse(matrix, funky, rows, cols, 0, 0);
+  return 0;
+}

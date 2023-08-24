@@ -1,0 +1,40 @@
+global dp = new int[][] {
+    new int[] {0, 0, 0, 0, 0},
+    new int[] {0, 0, 0, 0, 0},
+    new int[] {0, 0, 0, 0, 0},
+    new int[] {0, 0, 0, 0, 0},
+    new int[] {0, 0, 0, 0, 0},
+    new int[] {0, 0, 0, 0, 0}
+};
+
+int max(int x, int y){
+    if(x>y){
+        return x;
+    }
+    return y;
+    
+}
+
+int lcs(int[] a, int[] b) {
+    var m = length(a); 
+    var n = length(b); 
+    for (var i = 1; i <= m; i=i+1;) {
+        for (var j = 1; j <= n; j=j+1;) {
+            if (a[i - 1] == b[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    return dp[m][n];
+}
+
+
+int program(int argc, string[] argv) {
+  var arr1 = new int[] {1, 2, 3, 4, 5};
+  var arr2 = new int[] {2, 4, 6, 8};
+  var res = lcs(arr1, arr2);
+  print_string(string_of_int(res));
+  return res;
+}

@@ -1,0 +1,75 @@
+void init_board(int[][] board) {
+    for (var i = 0; i < length(board); i = i + 1;) {
+        for (var j = 0; j < length(board[0]); j = j + 1;) {
+            if (i == 0 | i == length(board) - 1 | i - 1 == j | i + 1 == j) {
+                board[i][j] = 1;
+            }
+        }
+    }
+    return;
+}
+
+void print_board(int[][] board) {
+    for (var i = 0; i < length(board); i = i + 1;) {
+        for (var j = 0; j < length(board[0]); j = j + 1;) {
+            if (board[i][j] == 1) {
+                print_string("1");
+            } else {
+                print_string("0");
+            }
+        }
+        print_string("\n");
+    }
+    print_string("\n");
+    return;
+}
+
+void run_generation(int[][] board) {
+    var size = length(board);
+    var next_board = new int[][size] { i -> new int[size] { j -> 0 }};
+
+    for (var i = 0; i < size; i = i + 1;) {
+        for (var j = 0; j < size; j = j + 1;) {
+            var count = 0;
+            for (var k = i - 1; k <= i + 1; k = k + 1;) {
+                for (var l = j - 1; l <= j + 1; l = l + 1;) {
+                    if (k >= 0 & k < size & l >= 0 & l < size) {
+                        if (board[k][l] == 1) {
+                            count = count + 1;
+                        }
+                    }
+                }
+            }
+            if (board[i][j] == 1 & (count == 2 | count == 3)) {
+                next_board[i][j] = 1;
+            } 
+            if (board[i][j] == 0 & count == 3) {
+                next_board[i][j] = 1;
+            } 
+        }
+    }
+
+    for (var i = 0; i < size; i = i + 1;) {
+        for (var j = 0; j < size; j = j + 1;) {
+            board[i][j] = next_board[i][j];
+        }
+    }
+    return;
+}
+
+int program(int argc, string[] argv) {
+
+    var size = 100;
+    var iters = 10;
+    var board = new int[][size] { i -> new int[size] { j -> 0 }};
+
+    init_board(board);
+    /* print_board(board); */
+
+    for (var i = 0; i < iters; i = i + 1;) {
+        run_generation(board);
+        /* print_board(board); */
+    }
+
+    return 0;
+}

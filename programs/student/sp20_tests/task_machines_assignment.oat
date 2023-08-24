@@ -1,0 +1,121 @@
+int findLowestMachine(int[] machines) {
+    var lowest = 100000;
+    for (var i = 0; i < length(machines); i = i + 1) {
+        if (machines[i] < lowest) {
+            lowest = i;
+        }
+    }
+    return lowest;
+}
+
+int[] createAlphabetMachines(int[] machines) {
+    var a = machines[0];
+    var b = machines[1];
+    var c = machines[2];
+    var d = machines[3];
+    var e = machines[4];
+    var f = machines[5];
+    var g = machines[6];
+    var h = machines[7];
+    var i = machines[8];
+    var j = machines[9];
+    var k = machines[10];
+    var l = machines[11];
+    var m = machines[12];
+    var n = machines[13];
+    var o = machines[14];
+    var p = machines[15];
+    var q = machines[16];
+    var r = machines[17];
+    var s = machines[18];
+    var t = machines[19];
+    var u = machines[20];
+    var v = machines[21];
+    var w = machines[22];
+    var x = machines[23];
+    var y = machines[24];
+    var z = machines[25];
+
+    a = a - 1;
+    b = b - 1;
+    c = c - 1;
+    d = d - 1;
+    e = e - 1;
+    f = f - 1;
+    g = g - 1;
+    h = h - 1;
+    i = i - 1;
+    j = j - 1;
+    k = k - 1;
+    l = l - 1;
+    m = m - 1;
+    n = n - 1;
+    o = o - 1;
+    p = p - 1;
+    q = q - 1;
+    r = r - 1;
+    s = s - 1;
+    t = t - 1;
+    u = u - 1;
+    v = v - 1;
+    w = w - 1;  
+    x = x - 1;
+    y = y - 1;
+    z = z - 1;
+
+    machines[0] = a;
+    machines[1] = b;
+    machines[2] = c;
+    machines[3] = d;
+    machines[4] = e;
+    machines[5] = f;
+    machines[6] = g;
+    machines[7] = h;
+    machines[8] = i;
+    machines[9] = j;
+    machines[10] = k;
+    machines[11] = l;
+    machines[12] = m;
+    machines[13] = n;
+    machines[14] = o;
+    machines[15] = p;
+    machines[16] = q;
+    machines[17] = r;
+    machines[18] = s;
+    machines[19] = t;
+    machines[20] = u;
+    machines[21] = v;
+    machines[22] = w;
+    machines[23] = x;
+    machines[24] = y;
+    machines[25] = z;
+
+    return machines;
+}
+
+int assignTasks(int[] times, int[] machines) {
+    var theMachines = machines;
+    for (var i = 0; i < length(times); i = i + 1) {
+        var machineSelected = findLowestMachine(theMachines);
+        theMachines[machineSelected] = theMachines[machineSelected] + times[i];
+    }
+    var lowestIndex = findLowestMachine(theMachines);
+    var result = theMachines[lowestIndex];
+    return result;
+}
+
+int program(int argc, string[] argv) {
+    var tasks = new int[]{5, 5, 5, 5, 1, 1, 1, 1, 9, 9, 9, 9, 3, 3, 3, 3, 1, 1};
+    var machines = new int[26]{1000000, 1000000, 1000000, 1000000, 1000000,
+                               1000000, 1000000, 1000000, 1000000, 1000000,
+                               1000000, 1000000, 1000000, 1000000, 1000000,
+                               1000000, 1000000, 1000000, 1000000, 1000000,
+                               1000000, 1000000, 1000000, 1000000, 1000000, 1000000};
+    for (var i; i < 1000000; i = i + 1) {
+        machines = createAlphabetMachines(machines);
+    }
+    var result = assignTasks(tasks, machines);
+    return result;
+}
+
+

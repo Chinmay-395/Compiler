@@ -1,0 +1,97 @@
+global puzzle_c = new int[][] {new int[] {6, 4, 5, 8, 9, 7, 3, 1, 2},
+                               new int[] {3, 1, 2, 5, 6, 4, 9, 7, 8},
+                               new int[] {9, 7, 8, 2, 3, 1, 6, 4, 5},
+                               new int[] {4, 2, 3, 6, 7, 5, 1, 8, 9},
+                               new int[] {1, 8, 9, 3, 4, 2, 7, 5, 6},
+                               new int[] {7, 5, 6, 9, 1, 8, 4, 2, 3},
+                               new int[] {5, 3, 4, 7, 8, 6, 2, 9, 1},
+                               new int[] {2, 9, 1, 4, 5, 3, 8, 6, 7},
+                               new int[] {8, 6, 7, 1, 2, 9, 5, 3, 4}};
+
+global puzzle_w = new int[][] {new int[] {6, 4, 5, 8, 9, 7, 3, 1, 2},
+                               new int[] {3, 1, 2, 5, 6, 4, 9, 7, 8},
+                               new int[] {5, 7, 8, 2, 3, 1, 6, 4, 9},
+                               new int[] {4, 2, 3, 6, 7, 9, 1, 8, 5},
+                               new int[] {1, 8, 9, 3, 4, 2, 7, 5, 6},
+                               new int[] {7, 5, 6, 9, 1, 8, 4, 2, 3},
+                               new int[] {5, 3, 4, 7, 8, 6, 2, 9, 1},
+                               new int[] {2, 9, 1, 4, 5, 3, 8, 6, 7},
+                               new int[] {8, 6, 7, 1, 2, 9, 5, 3, 4}};
+
+int divide (int n, int m) {
+    var x = 0;
+    var count = 0;
+    while (x < n) {
+        x = x + m;
+        count = count + 1;
+    }
+    if (x > n) {
+      return count - 1;
+    } else {
+      return count;
+    }
+}
+
+int mod (int n, int m) {
+  var divided = divide(n, m) * m;
+  var ret = n - divided;
+  return ret;
+}
+
+bool verifySudoku(int[][] puzzle) {
+  
+  for (var i = 0; i < 9; i = i+1;) {
+    /* clear used array */
+    var used_row = new bool[10];
+    for (var j = 0; j < 9; j = j + 1;) {
+      /* Check rows */
+      var puzzleNum = puzzle[i][j];
+      if (used_row[puzzleNum] == true) {
+        return false;
+      } 
+      used_row[puzzleNum] = true;
+    }
+  }
+
+  for (var i = 0; i < 9; i = i+1;) {
+    /* clear used array */
+    var used_col = new bool[10];
+    for (var j = 0; j < 9; j = j + 1;) {
+      /* Check cols */
+      var puzzleNum = puzzle[j][i];
+      if (used_col[puzzleNum] == true) {
+        return false;
+      } 
+      used_col[puzzleNum] = true;
+    }
+  }
+
+  for (var i = 0; i < 3; i = i + 1;) {
+    for (var j = 0; j < 3; j = j + 1;) {
+      var used_square = new bool[10];
+      for (var k = 0; k < 9; k = k + 1;) {
+        var puzzleNum = puzzle[i * 3 + divide(k, 3)][j * 3 + mod(k, 3)];
+        if (used_square[puzzleNum] == true) {
+          return false;
+        }
+        used_square[puzzleNum] = true;
+      }
+    }
+  }
+
+  return true;
+}
+
+int program (int argc, string[] argv) {
+  var pass = true;
+  for (var i = 0; i < 100000; i = i + 1;) {
+    if (!verifySudoku(puzzle_c)) {
+      pass = false;
+    }
+    if (verifySudoku(puzzle_w)) {
+      pass = false;
+    }
+  }
+  print_bool(pass);
+  return 0;
+}

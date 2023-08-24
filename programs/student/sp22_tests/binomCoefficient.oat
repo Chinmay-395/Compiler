@@ -1,0 +1,27 @@
+int program(int argc, string[] argv) {
+
+    var num = 1;
+    var den = 1;
+    for (var j = 1; j < 10000000; j = j + 1;){
+        var n = 150;
+        var c = 12;
+        var n_c = n - c;
+        var n_fact = 1;
+        var c_fact = 1;
+        var n_c_fact = 1;
+        for (var i = n; i > 0; i = i - 1;){
+            n_fact = n_fact * i;
+        }
+        for (var i = c; i > 0; i = i - 1;){
+            c_fact = c_fact * i;
+        }
+        for (var i = n_c; i > 0; i = i - 1;){
+            n_c_fact = n_c_fact * i;
+        }
+
+        num = n_fact;
+        den = n_c_fact * c_fact;
+    }
+    return 0;
+
+}

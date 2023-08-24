@@ -1,0 +1,159 @@
+void array_to_str (int[] a, int l) {
+  for (var i = 0; i < l; i = i + 1;) {
+    print_int(a[i]);
+    print_string(" ");
+  }
+
+  return;
+}
+
+void flip (int[] a, int p) {
+  var t = 0;
+  var s = 0;
+
+  var pp = p;
+
+  while (s < pp) {
+    var b = a[s];
+    t = b;
+
+    var c = a[pp];
+    a[s] = c;
+
+    var f = t;
+    a[pp] = f;
+
+    var g = s + 1;
+    s = g;
+
+    var k = pp - 1;
+    pp = k;
+  }
+
+  return;
+}
+
+int max (int[] a, int l) {
+  var max_v = 0;
+
+  for (var i = 0; i < l; i = i + 1;) {
+    if (a[i] > a[max_v]) {
+      var b = i;
+      var c = b;
+      max_v = c;
+    }
+  }
+
+  return max_v;
+}
+
+
+void sort(int[] a, int l) {
+  for (var c = l; c > 1; c = c - 1;) {
+    var max_v = max(a, c);
+
+    var d = c - 1;
+
+    if (max_v != d) {
+      flip(a, max_v);
+
+      var e = c - 1;
+      flip(a, e);
+    }
+  }
+
+  return;
+}
+
+void random_array(int b, int c, int d, int e, int f, int g, int h, int i, int j, int k, int l, int m, int n, int o, int p) {
+  var aa = b * c;
+  var bb = d * aa;
+  var cc = g + bb;
+
+  var dd = p + cc;
+  var ee = dd + e;
+  var ff = ee + l;
+  var gg = ff + h;
+  var hh = gg + b;
+  var ii = hh + b;
+  var jj = p * f + 35433 + ii;
+  var size = jj + 1000;
+
+  var a = new int[size];
+
+  print_int(size);
+  print_string("     ");
+
+  for (var y = 0; y < size; y = y + 1;) {
+    var a_1 = l;
+    var a_2 = a_1 + y;
+    var a_3 = a_2 + y;
+    var a_4 = a_3 + y;
+    var a_5 = a_4 + y;
+    var a_6 = a_5 + y;
+    var a_7 = a_6 + y;
+    var a_8 = a_7 + y;
+    var a_9 = a_8 + y;
+    var a_10 = a_9 + y;
+    var a_11 = a_10 + y;
+    var a_12 = a_11 + y;
+    var a_13 = a_12 + y;
+    var a_14 = a_13 + y;
+    var a_15 = a_14 + y;
+    var a_16 = a_15 + y;
+    var a_17 = a_16 + y;
+    var a_18 = a_17 + y;
+    var a_19 = a_18 + y;
+    var a_20 = a_19 + y;
+
+    var val = a_20;
+
+    a[y] = val;
+  }
+
+  sort(a, size);
+
+  return;
+}
+
+int program (int argc, string[] argv) {
+    var a = new int[10000];
+
+    for (var i = 0; i < 10000; i = i + 1;) {
+      a[i] = 10000 - i;
+    }
+
+    var one = 1;
+    var hundred_1 = 100;
+    var hundred_2 = 100;
+    var hundred_3 = 100;
+    var var_290 = 290;
+    var var_105 = 105;
+
+    var b = 0;
+    var c = b + one;
+    var d = c + one;
+    var e = d + one;
+    var f = e + one;
+    var g = f + one;
+    var h = g + hundred_1;
+    var i = h + var_105;
+    var j = i + var_290;
+    var k = j + hundred_2;
+    var l = k + hundred_2;
+    var m = l + hundred_3;
+    var n = m + hundred_3;
+    var o = n + hundred_3;
+    var p = o * 10;
+
+    sort(a, p);
+
+    /*
+    array_to_str(a, p);
+	  print_string("\n");
+    */
+
+    random_array(b, c, d, e, f, g, h, i, j, k, l, m, n, o, p);
+
+    return 0;
+}

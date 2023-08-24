@@ -1,0 +1,117 @@
+
+struct Good {
+    int weight;
+    int value
+}
+
+int divide (int numerator, int denominator) {
+    var count = 0;
+    while (numerator > 0) {
+        numerator = numerator - denominator;
+        if (numerator > 0) {
+            count = count + 1;
+        }
+    }
+    return count;
+}
+
+int program(int argc, string[] argv) {
+    var capacity = 56;
+    var values = new Good[]{new Good {weight = 1; value = 2},
+                            new Good {weight = 225; value = 2},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 25; value = 2},
+                            new Good {weight = 5; value = 22},
+                            new Good {weight = 25; value = 2},
+                            new Good {weight = 5; value = 7},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 1; value = 7},
+                            new Good {weight = 1; value = 4},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 22225; value = 222},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 5; value = 22},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 5; value = 422},
+                            new Good {weight = 52; value = 2},
+                            new Good {weight = 5; value = 22},
+                            new Good {weight = 50; value = 234232},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 3425; value = 2},
+                            new Good {weight = 5; value = 22},
+                            new Good {weight = 23425; value = 223423423242},
+                            new Good {weight = 52; value = 2},
+                            new Good {weight = 5; value = 234232},
+                            new Good {weight = 5; value = 232},
+                            new Good {weight = 5; value = 200},
+                            new Good {weight = 5; value = 2},
+                            new Good {weight = 544; value = 2000000},
+                            new Good {weight = 90; value = 10},
+                            new Good {weight = 8; value = 8},
+                            new Good {weight = 2; value = 15},
+                            new Good {weight = 5; value = 26},
+                            new Good {weight = 6; value = 21},
+                            new Good {weight = 4; value = 12},
+                            new Good {weight = 6; value = 56}};
+    var newCapacity = 0;
+    var lengthValues = length(values);
+    var currentValValue = 0;
+    var nextIndex = 0;
+    var density1 = 0;
+    var density2 = 0;
+    var unused1 = 0;
+    var currentValWeight = 0;
+    var unused2 = 0;
+    for (var index = 0; index < lengthValues; index = index + 1;) {
+        var curr = values[index];
+        currentValWeight = curr.weight;
+        if (currentValWeight > capacity) {
+            curr.value = 0;
+        }
+    }
+    for (var i = 0; i < lengthValues; i = i + 1;) {
+        for (var j = 0; j < lengthValues - 1; j = j + 1;) {
+            nextIndex = j + 1;
+            var currentVal = values[j];
+            var nextVal = values[nextIndex];
+            density1 = divide(currentVal.value * 100, currentVal.weight);
+            density2 = divide(nextVal.value * 100, nextVal.weight);
+            if (density1 < density2) {
+                var temp1 = values[nextIndex];
+                var temp2 = values[j];
+                values[j] = temp1;
+                values[nextIndex] = temp2; 
+            }
+        }
+    }
+    var unused3 = 0;
+    var sum = 0;
+    var usedCapacity = 0;
+    var lengthValues2 = length(values);
+    for (var k = 0; k < lengthValues2; k = k + 1;) {
+        var currentVal = values[k];
+        currentValWeight = currentVal.weight;
+        newCapacity = usedCapacity + currentValWeight;
+        currentValValue = currentVal.value;
+        if (newCapacity > capacity) {
+            if ((currentValWeight < capacity | currentValWeight == capacity) & currentValValue > sum) {
+                var max = currentValValue;
+                for (var l = 0; l < lengthValues2; l = l + 1;) {
+                    var newVal = values[l].value;
+                    if (newVal > max) {
+                        max = newVal;
+                    }
+                }
+                return max;
+            } else {
+                return sum;
+            }
+        } else {
+            sum = sum + currentValValue;
+            usedCapacity = newCapacity;
+        }
+    }
+    return sum;
+}

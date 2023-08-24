@@ -1,0 +1,29 @@
+int cube(int n) {
+    var m = 0;
+    m = n * n;
+    m = n * m;
+    return m;
+}
+
+int num_of_ways(int n) {
+    var res = 0;
+    for(var i = 0; 2 * cube(i) <= n; i = i + 1;) {
+        var j = i;
+        var k = cube(i);
+        var c = k + cube(j);
+        while (c <= n) {
+            if (c == n) {
+                res = res + 1;
+            }
+            j = j + 1;
+            c = k + cube(j);
+        }
+    }
+    return res;
+}
+
+int program (int argc, string[] argv) {
+    var n = 6963472309248;
+    var max_ans = num_of_ways(n);
+    return max_ans;
+}

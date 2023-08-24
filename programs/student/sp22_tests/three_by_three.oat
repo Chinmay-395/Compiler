@@ -1,0 +1,42 @@
+global three_by_three = new int[][] {
+    new int[] {181, 749, 144},
+    new int[] {21,  310, 427},
+    new int[] {756, 434, 166}
+};
+
+int det_two_by_two(int[][] mat) {
+    return (mat[0][0] * mat[1][1]) - (mat[0][1] * mat[1][0]);
+}
+
+int det_three_by_three(int[][] mat) {
+    var sum = 0;
+    for (var i = 0; i < 3; i = i + 1;) {
+        var sub_mat = new int[][]{ new int[]{0, 0}, new int[]{0, 0} };
+        var c_index = 0;
+        for (var c = 0; c < 3; c = c + 1;) {
+            if (c != i) {
+                for (var r = 1; r < 3; r = r + 1;) {
+                    sub_mat[r - 1][c_index] = mat[r][c];
+                }
+                c_index = c_index + 1;
+            }
+        }
+        var det = det_two_by_two(sub_mat);
+        if (i == 1) {
+            sum = sum - (mat[0][i] * det);
+        } else {
+            sum = sum + (mat[0][i] * det);
+        }
+    }
+    return sum;
+}
+ 
+int program(int arc, string[] args) {
+    var res = det_three_by_three(three_by_three);
+    /* run a bunch of times for extra complexity */
+    for (var i = 0; i < 1000000; i = i + 1;) {
+        var x = det_three_by_three(three_by_three);
+    }
+    print_string(string_of_int(res));
+    return res;
+}

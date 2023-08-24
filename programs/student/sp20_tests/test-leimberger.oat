@@ -1,0 +1,21 @@
+int program(int argc, string[] argv) {
+    var a = 0;
+    var b = 1;
+
+    var result = 0;
+    for (var i = 0; i < 10000001; i = i + 1;) {
+        var c = a + b;
+        var d = b + c;
+        var e = c + d;
+        var f = d + e;
+        var g = e + f;
+        var h = f + g;
+        var ii = g + h;
+        var j = h + ii;
+        var k = i + j;
+        var l = j + k;
+        var m = k + l;
+        result = m;
+    }
+    return result;
+}

@@ -1,0 +1,61 @@
+int numIslands (int[][] grid) {
+    var count = 0;
+    for (var i = 0; i < length(grid); i = i + 1;) {
+        for (var j = 0; j < length(grid[i]); j = j + 1;) {
+            count = count + dfs(grid, i, j);
+        }
+    }
+
+    return count;
+}
+
+int dfs (int[][] grid, int i, int j) {
+     if (i < 0) {
+        return 0;
+    }
+    if (j < 0) {
+        return 0;
+    }
+    if (i >= length(grid)) {
+        return 0;
+    }
+    if (j >= length(grid[i])) {
+        return 0;
+    }
+    if (grid[i][j] == 0 | grid[i][j] == 2) {
+        return 0;
+    }
+
+    /* mark as visited */
+    grid[i][j] = 2;
+
+    /* recursive calls */
+        
+    var res = dfs(grid, i + 1, j);
+    var res2 = dfs(grid, i, j + 1);
+    var res3 = dfs(grid, i - 1, j);
+    var res4 = dfs(grid, i, j - 1);
+
+    return 1;
+}
+
+
+int program (int argc, string[] argv) {
+    var arr = new int[][] {
+        new int[] {1, 1, 0, 0, 0},
+        new int[] {1, 1, 0, 0, 0},
+        new int[] {0, 0, 1, 0, 0},
+        new int[] {0, 0, 0, 1, 1}
+    };
+
+
+    for (var i = 0; i < 1000000; i = i + 1;) {
+        var random = new int[][] {new int []{1, 0, 0, 0, 0, 1, 0, 1}, new int[] {1, 0, 0, 0, 0, 1, 0, 1}};
+        var res = numIslands(random);
+    }
+    print_int(numIslands(arr));
+    print_string ("\n");
+
+
+    return 1;
+}

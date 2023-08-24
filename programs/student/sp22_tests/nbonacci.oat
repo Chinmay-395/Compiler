@@ -1,0 +1,17 @@
+int nbonacci(int n, int x) {
+  if (x < n) {
+    return 1; 
+  }
+  var res = 0;
+  for (var i = 1; i <= n; i = i + 1;) {
+    res = res + nbonacci(n, x - i);
+  }
+  return res;
+}
+
+int program(int argc, string[] argv) {
+  print_int(nbonacci(2, 39));
+  print_string("\n");
+  print_int(nbonacci(3, 27));
+  return 1;
+}

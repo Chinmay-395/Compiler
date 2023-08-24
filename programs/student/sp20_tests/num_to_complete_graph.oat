@@ -1,0 +1,135 @@
+struct Edge {
+  int v1;
+  int v2
+}
+
+struct List {
+  Edge e;
+  List? next
+}
+
+bool listContainsEdge(int vx, int vy,  List? l) {
+    if?(List k = l) {
+        var edge = k.e;
+        var curr = k;
+        for (var i = 0; i < 40; i = i + 1;) {
+            if ((edge.v1 == vx) & (edge.v2 == vy)) {
+                return true;
+            } else {
+                if?(List h = curr.next) {
+                    curr = h;
+                    edge = h.e;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+int numToComplete(int v, List l) {
+  var counter = 0;
+  for (var i = 1; i <= v; i = i + 1;) {
+      for (var j = 1; j <= v; j = j + 1;) {
+          if (i != j) {
+              if (listContainsEdge(i, j, l) == false) {
+                  counter = counter + 1;
+              }
+          }
+      }
+  }
+  return counter;
+}
+
+int program(int argc, string[] argv) {
+  var e0  = new Edge {v1 = 1; v2 = 2};
+  var e1  = new Edge {v1 = 1; v2 = 3};
+  var e2  = new Edge {v1 = 1; v2 = 4};
+  var e3  = new Edge {v1 = 1; v2 = 5};
+  var e4  = new Edge {v1 = 1; v2 = 6};
+  var e5  = new Edge {v1 = 1; v2 = 7};
+  var e6  = new Edge {v1 = 1; v2 = 8};
+  var e7  = new Edge {v1 = 1; v2 = 9};
+  var e8  = new Edge {v1 = 1; v2 = 10};
+  var e9  = new Edge {v1 = 1; v2 = 11};
+
+  var f0  = new Edge {v1 = 2; v2 = 1};
+  var f1  = new Edge {v1 = 2; v2 = 3};
+  var f2  = new Edge {v1 = 2; v2 = 4};
+  var f3  = new Edge {v1 = 2; v2 = 5};
+  var f4  = new Edge {v1 = 2; v2 = 6};
+  var f5  = new Edge {v1 = 2; v2 = 7};
+  var f6  = new Edge {v1 = 2; v2 = 8};
+  var f7  = new Edge {v1 = 2; v2 = 9};
+  var f8  = new Edge {v1 = 2; v2 = 10};
+  var f9  = new Edge {v1 = 2; v2 = 11};
+
+  var g0  = new Edge {v1 = 3; v2 = 1};
+  var g1  = new Edge {v1 = 3; v2 = 2};
+  var g2  = new Edge {v1 = 3; v2 = 4};
+  var g3  = new Edge {v1 = 3; v2 = 5};
+  var g4  = new Edge {v1 = 3; v2 = 6};
+  var g5  = new Edge {v1 = 3; v2 = 7};
+  var g6  = new Edge {v1 = 3; v2 = 8};
+  var g7  = new Edge {v1 = 3; v2 = 9};
+  var g8  = new Edge {v1 = 3; v2 = 10};
+  var g9  = new Edge {v1 = 3; v2 = 11};
+
+  var h0  = new Edge {v1 = 4; v2 = 1};
+  var h1  = new Edge {v1 = 4; v2 = 2};
+  var h2  = new Edge {v1 = 4; v2 = 3};
+  var h3  = new Edge {v1 = 4; v2 = 5};
+  var h4  = new Edge {v1 = 4; v2 = 6};
+  var h5  = new Edge {v1 = 4; v2 = 7};
+  var h6  = new Edge {v1 = 4; v2 = 8};
+  var h7  = new Edge {v1 = 4; v2 = 9};
+  var h8  = new Edge {v1 = 4; v2 = 10};
+  var h9  = new Edge {v1 = 4; v2 = 11};
+
+  var i9  = new List {e = h9;  next = List null}; 
+  var i8  = new List {e = h8;  next = i9}; 
+  var i7  = new List {e = h7;  next = i8};
+  var i6  = new List {e = h6;  next = i7};
+  var i5  = new List {e = h5;  next = i6};
+  var i4  = new List {e = h4;  next = i5};
+  var i3  = new List {e = h3;  next = i4};
+  var i2  = new List {e = h2;  next = i3};
+  var i1  = new List {e = h1;  next = i2};
+  var i0  = new List {e = h0;  next = i1};
+
+  var j9  = new List {e = g9;  next = i0};
+  var j8  = new List {e = g8;  next = j9}; 
+  var j7  = new List {e = g7;  next = j8};
+  var j6  = new List {e = g6;  next = j7};
+  var j5  = new List {e = g5;  next = j6};
+  var j4  = new List {e = g4;  next = j5};
+  var j3  = new List {e = g3;  next = j4};
+  var j2  = new List {e = g2;  next = j3};
+  var j1  = new List {e = g1;  next = j2};
+  var j0  = new List {e = g0;  next = j1};
+
+  var k9  = new List {e = f9;  next = j0};
+  var k8  = new List {e = f8;  next = k9}; 
+  var k7  = new List {e = f7;  next = k8};
+  var k6  = new List {e = f6;  next = k7};
+  var k5  = new List {e = f5;  next = k6};
+  var k4  = new List {e = f4;  next = k5};
+  var k3  = new List {e = f3;  next = k4};
+  var k2  = new List {e = f2;  next = k3};
+  var k1  = new List {e = f1;  next = k2};
+  var k0  = new List {e = f0;  next = k1};
+  
+  var l9  = new List {e = e9;  next = k0};
+  var l8  = new List {e = e8;  next = l9}; 
+  var l7  = new List {e = e7;  next = l8};
+  var l6  = new List {e = e6;  next = l7};
+  var l5  = new List {e = e5;  next = l6};
+  var l4  = new List {e = e4;  next = l5};
+  var l3  = new List {e = e3;  next = l4};
+  var l2  = new List {e = e2;  next = l3};
+  var l1  = new List {e = e1;  next = l2};
+  var l0  = new List {e = e0;  next = l1};
+
+  print_int (numToComplete(10000, l0));
+  return 0;
+}
+

@@ -1,0 +1,89 @@
+struct Graph {
+  AdjList?[] adj_lists;
+  int size
+}
+
+struct AdjList {
+  Edge[] edges
+}
+
+struct Edge {
+  int neighbor
+}
+
+global e01 = new Edge { neighbor = 1};
+global e02 = new Edge { neighbor = 2};
+
+global e13 = new Edge { neighbor = 3};
+
+global e34 = new Edge { neighbor = 4};
+
+global e45 = new Edge { neighbor = 5};
+
+global e56 = new Edge { neighbor = 6};
+
+bool[] approx(AdjList? vertex_0_neighbors, AdjList? vertex_1_neighbors, AdjList? vertex_2_neighbors, AdjList? vertex_3_neighbors, AdjList? vertex_4_neighbors, AdjList? vertex_5_neighbors, AdjList? vertex_6_neighbors) {
+    var g = new Graph { adj_lists = new AdjList?[]{
+        vertex_0_neighbors, vertex_1_neighbors, vertex_2_neighbors, 
+        vertex_3_neighbors, vertex_4_neighbors, vertex_5_neighbors, 
+        vertex_6_neighbors}; size = 7 };
+
+    var local_res_size = 0;
+ var visited = new bool[g.size]{id -> false};
+
+ for (var u = 0; u < g.size; u = u +1;) {
+  if (visited[u] == false) {
+            var break_flag = false;
+
+            if?(AdjList a = g.adj_lists[u]) {
+                var a_edges = a.edges;
+                for (var i = 0; i < length(a_edges) & !break_flag; i = i + 1;) {
+                    var curr_edge = a_edges[i];
+                    var curr_neighbor = curr_edge.neighbor;
+
+                    if (visited[curr_neighbor] == false) {
+                        visited[curr_neighbor] = true;
+                        visited[u] = true;
+                        break_flag = true;
+        }   
+                }
+            }
+        }
+        var used_vertex = visited[u];
+        if (used_vertex == true) {
+            local_res_size = local_res_size + 1;
+        }
+ }
+    return visited;
+}
+
+
+void print_int_array(bool[] input_arr) {
+    print_string("Vertex Cover 2-Approximation:");
+    for (var i = 0; i < length(input_arr); i = i + 1;) {
+        if(input_arr[i]) {
+            print_int(i);
+            print_string(" ");
+        }
+    }
+    return;
+}
+
+
+
+int program (int argc, string[] argv) {
+ var vertex_0_neighbors = new AdjList { edges = new Edge[]{e01, e02} };
+    var vertex_1_neighbors = new AdjList { edges = new Edge[]{e13} };
+    var vertex_2_neighbors = AdjList null;
+    var vertex_3_neighbors = new AdjList { edges = new Edge[]{e34} };
+    var vertex_4_neighbors = new AdjList { edges = new Edge[]{e45} };
+    var vertex_5_neighbors = new AdjList { edges = new Edge[]{e56} };
+    var vertex_6_neighbors = AdjList null;
+    
+    var x = 0;
+ var result = approx(vertex_0_neighbors, vertex_1_neighbors, vertex_2_neighbors, vertex_3_neighbors, vertex_4_neighbors, vertex_5_neighbors, vertex_6_neighbors);
+
+    print_int_array(result);
+
+    return 0;
+}

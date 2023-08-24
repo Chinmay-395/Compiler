@@ -1,0 +1,30 @@
+int insertionSort(int[] arr){
+    var acc = arr[0];
+
+    for (var i = 1; i < length(arr) - 1; i = i + 1;) {
+        acc = acc+ arr[i];
+        var curr = arr[i];
+ 
+        var compare = i-1;
+        while (compare >= 0){
+            if (curr < arr[compare]){
+                    arr[compare + 1] = arr[compare];
+                }
+                compare = compare- 1;
+        }
+        arr[compare + 1] = curr;
+    }
+    return acc;
+}
+ 
+int program(int arc, string[] args) {
+    var size = 42069;
+    var array = new int[size];
+
+    for (var i = 0; i < size; i = i + 1;) {
+        array[i] = size - i;
+    } 
+
+    var res = insertionSort(array);
+    return res;
+}

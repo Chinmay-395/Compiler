@@ -1,0 +1,30 @@
+int fibo(int x) {
+  if(x==0) {return 0;}
+  if(x==1) {return 1;}
+  return fibo(x-1) + fibo(x-2);
+}
+
+int program(int argc, string[] argv) {
+  var x = 0;
+  for (var i = 0; i < 1000000; i = i + 1;) {
+    var a = 0;
+    var b = a + fibo(i);
+    var c = fibo(i+1);
+    var d = c - b;
+    var e = 0;
+    var f = e + fibo(i+2);
+    var g = fibo(i+3);
+    var h = g - f;
+    var j = 0;
+    var k = j + fibo(i+4);
+    var l = fibo(i+5);
+    var m = l - k;
+    var n = 0;
+    var o = n + fibo(i+6);
+    var p = fibo(i+7);
+    var q = p - o;
+    x = x + d + h + m + q;
+  }
+  print_int(x);
+  return 0;
+}

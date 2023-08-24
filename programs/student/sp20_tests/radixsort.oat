@@ -1,0 +1,47 @@
+int[] radixsort(int[]? maybe_data, int maxbound) {
+  if? (int[] data = maybe_data) {
+  var x = new int[maxbound];
+  var data_length = length(data);
+  for (var i = 0; i < data_length; i = i+1;){
+    if (data[i] >= maxbound) {
+      return new int[]{};
+    } else {
+      x[data[i]] = x[data[i]] + 1;
+    }
+  }
+  var y = new int[data_length];
+  var count = 0;
+  for (var j = 0; j < data_length; j = j+1;){
+    while (x[count] == 0) {
+      count = count + 1;
+    }
+    y[j] = count;
+    x[count] = x[count] - 1;
+  }
+
+  return y;
+  } else {
+    return new int[0];
+  }
+
+}
+
+int program (int argc, string[] args) {
+  var arr = new int[4]{x -> 4-x};
+  var y = radixsort (arr, 6);
+  var truth = true;
+  for (var i = 0; i < length(y); i = i + 1;){
+    truth = truth & (y[i] == (i+1));
+  }
+
+
+  var z = radixsort (int[] null, 6);
+  truth = truth & (length(z) == 0);
+
+  if (truth){
+  return 1;
+  } else {
+  return 0;
+  }
+
+}

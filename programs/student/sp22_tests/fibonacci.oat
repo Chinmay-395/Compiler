@@ -1,0 +1,156 @@
+int sum0() {
+    return 0;
+}
+
+int sum1(int a) {
+    return sum0() + a;
+}
+
+int sum2(int a, int b) {
+    return sum1(a) + b;
+}
+
+int sum3(int a, int b, int c) {
+    return sum2(a, b) + c;
+}
+
+int sum4(int a, int b, int c, int d) {
+    return sum3(a, b, c) + d;
+}
+
+int sum5(int a, int b, int c, int d, int e) {
+    return sum4(a, b, c, d) + e;
+}
+
+int sum6(int a, int b, int c, int d, int e, int f) {
+    return sum5(a, b, c, d, e) + f;
+}
+
+int sum7(int a, int b, int c, int d, int e, int f, int g) {
+    return sum6(a, b, c, d, e, f) + g;
+}
+
+int sum8(int a, int b, int c, int d, int e, int f, int g, int h) {
+    return sum7(a, b, c, d, e, f, g) + h;
+}
+
+int sum9(int a, int b, int c, int d, int e, int f, int g, int h, int i) {
+    return sum8(a, b, c, d, e, f, g, h) + i;
+}
+
+int sum10(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j) {
+    return sum9(a, b, c, d, e, f, g, h, i) + j;
+}
+
+int fibonacci(int n) {
+    if (n <= 0) {
+        return 0;
+    }
+    if (n == 1) {
+        return 1;
+    }
+    if (n == 2) {
+        var f1 = 1;
+        var f2 = 1;
+        return f1 + f2;
+    }
+    if (n == 3) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        return f3;
+    }
+    if (n == 4) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        var f4 = f3 + f2;
+        return f4;
+    }
+    if (n == 5) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        var f4 = f3 + f2;
+        var f5 = f4 + f3;
+        return f5;
+    }
+    if (n == 6) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        var f4 = f3 + f2;
+        var f5 = f4 + f3;
+        var f6 = f5 + f4;
+        return f6;
+    }
+    if (n == 7) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        var f4 = f3 + f2;
+        var f5 = f4 + f3;
+        var f6 = f5 + f4;
+        var f7 = f6 + f5;
+        return f7;
+    }
+    if (n == 8) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        var f4 = f3 + f2;
+        var f5 = f4 + f3;
+        var f6 = f5 + f4;
+        var f7 = f6 + f5;
+        var f8 = f7 + f6;
+        return f8;
+    }
+    if (n == 9) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        var f4 = f3 + f2;
+        var f5 = f4 + f3;
+        var f6 = f5 + f4;
+        var f7 = f6 + f5;
+        var f8 = f7 + f6;
+        var f9 = f8 + f7;
+        return f9;
+    }
+    if (n == 10) {
+        var f1 = 1;
+        var f2 = 1;
+        var f3 = f1 + f2;
+        var f4 = f3 + f2;
+        var f5 = f4 + f3;
+        var f6 = f5 + f4;
+        var f7 = f6 + f5;
+        var f8 = f7 + f6;
+        var f9 = f8 + f7;
+        var f10 = f9 + f8;
+        return f10;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int fibonacci_loop () {
+    var total = 0;
+    for (var i = 0; i < 50000000; i=i+1;) {
+        var f1 = fibonacci(1);
+        var f2 = fibonacci(2);
+        var f3 = fibonacci(3);
+        var f4 = fibonacci(4);
+        var f5 = fibonacci(5);
+        var f6 = fibonacci(6);
+        var f7 = fibonacci(7);
+        var f8 = fibonacci(8);
+        var f9 = fibonacci(9);
+        var f10 = fibonacci(10);
+        total = total + sum10(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10);
+    }
+    return total;
+}
+
+int program (int argc, string[] argv) {
+  return fibonacci_loop();
+}

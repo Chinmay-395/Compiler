@@ -1,0 +1,139 @@
+OS: macOS Ventura
+Processor: Apple M1
+
+without -O1:
+
+1. regalloctest.oat
+None:- 
+real 0m2.227s 
+user 0m1.963s 
+sys 0m0.005s
+
+Greedy:- 
+real 0m1.463s 
+user 0m1.342s 
+sys 0m0.008s
+
+Better:- 
+real    0m0.183s
+user    0m0.089s
+sys     0m0.003s
+
+Clang:- 
+real    0m0.107s
+user    0m0.002s
+sys     0m0.003s
+
+
+2. matmul.oat
+None:- 
+real    0m0.099s
+user    0m0.002s
+sys     0m0.002s
+
+Greedy:- 
+real    0m2.052s
+user    0m1.954s
+sys     0m0.008s
+
+Better:- 
+real    0m0.098s
+user    0m0.002s
+sys     0m0.003s
+
+Clang:-
+real    0m0.132s
+user    0m0.002s
+sys     0m0.002s
+
+
+3. custom_test
+
+None:-
+real    0m0.195s
+user    0m0.002s
+sys     0m0.004s
+
+Greedy:-
+real    0m0.175s
+user    0m0.002s
+sys     0m0.003s
+
+Better:-
+real    0m0.165s
+user    0m0.002s
+sys     0m0.002s
+
+Clang:-
+real    0m0.088s
+user    0m0.002s
+sys     0m0.003s
+
+
+With 01
+
+1. regalloctest
+
+None:-
+real    0m0.742s
+user    0m0.599s
+sys     0m0.010s
+
+Greedy:-
+real    0m0.740s
+user    0m0.598s
+sys     0m0.009s
+
+Better:-
+real    0m0.685s
+user    0m0.591s
+sys     0m0.004s
+
+Clang:-
+real    0m0.107s
+user    0m0.002s
+sys     0m0.004s
+
+2. matmal
+
+None:-
+real    0m2.074s
+user    0m1.974s
+sys     0m0.009s
+
+Greedy:-
+real    0m2.137s
+user    0m1.941s
+sys     0m0.008s
+
+Better:-
+real    0m1.473s
+user    0m1.375s
+sys     0m0.008s
+
+Clang:-
+real    0m0.176s
+user    0m0.076s
+sys     0m0.004s
+
+3. custom_test
+
+None:-
+real    0m0.209s
+user    0m0.002s
+sys     0m0.004s
+
+Greedy:-
+real    0m0.104s
+user    0m0.002s
+sys     0m0.002s
+
+Better:-
+real    0m0.101s
+user    0m0.002s
+sys     0m0.004s
+
+Clang:-
+real    0m0.093s
+user    0m0.002s
+sys     0m0.003s

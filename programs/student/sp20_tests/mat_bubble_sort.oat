@@ -1,0 +1,137 @@
+int[][] bubbleSort (int[][] mat) {
+  var first_row = mat[0];
+  var orig_cols = length(first_row);
+  var shortened_cols = orig_cols - 1;
+  var rows = length(mat);
+  var cols = length(first_row);
+  var total_loops = rows*cols;
+  var shortened_rows = rows - 1;
+  for (var k = 0; k < total_loops; k = k + 1;) {
+    for (var i = 0; i < rows; i = i + 1;) {
+      if (i == shortened_rows) {
+        cols = shortened_cols;
+      } else {
+        cols = orig_cols;
+      }
+      for (var j = 0; j < cols; j = j + 1;) {
+        var i2 = 0;
+        var j2 = 0;
+        if (j >= shortened_cols) {
+          i2 = i+1;
+          j2 = 0;
+        } else {
+          i2 = i;
+          j2 = j+1;
+        }
+        
+        if (mat[i][j] < mat[i2][j2]) {
+          var temp = mat[i][j];
+          mat[i][j] = mat[i2][j2];
+          mat[i2][j2] = temp;
+        }
+      }
+    }
+  }
+  for (var k = 0; k < total_loops; k = k + 1;) {
+    for (var i = 0; i < rows; i = i + 1;) {
+      if (i == shortened_rows) {
+        cols = shortened_cols;
+      } else {
+        cols = orig_cols;
+      }
+      for (var j = 0; j < cols; j = j + 1;) {
+        var i2 = 0;
+        var j2 = 0;
+        if (j >= shortened_cols) {
+          i2 = i+1;
+          j2 = 0;
+        } else {
+          i2 = i;
+          j2 = j+1;
+        }
+        
+        if (mat[i][j] > mat[i2][j2]) {
+          var temp = mat[i][j];
+          mat[i][j] = mat[i2][j2];
+          mat[i2][j2] = temp;
+        }
+        var ordered = true;
+        var new_cols = orig_cols;
+        for (var m = 0; m < rows; m=m+1;) {
+          if (m == shortened_rows) {
+            new_cols = shortened_cols;
+          } else {
+            new_cols = orig_cols;
+          }
+          for (var l = 0; l < new_cols; l=l+1;) {
+            var m2 = 0;
+            var l2 = 0;
+            if (l >= shortened_cols) {
+              m2 = m+1;
+              l2 = 0;
+            } else {
+              m2 = m;
+              l2 = l+1;
+            }
+            if (mat[m][l] > mat[m2][l2]) {
+              ordered = false;
+            }
+          }
+        }
+        if (ordered == true) {
+          return mat;
+        }
+      }
+    }
+  }
+
+  return mat;
+}
+
+void print_mat(int[][] mat) {
+  var rows = length(mat);
+  var cols = length(mat[0]);
+  for (var i = 0; i < rows; i = i + 1;) {
+    print_string("[ ");
+    for (var j = 0; j < cols; j = j + 1;) {
+      print_int(mat[i][j]);
+      print_string(" ");
+    }
+    print_string("]\n");
+  }
+  print_string("\n");
+  return;
+}
+
+
+int program(int argc, string[] args) {
+  var row1 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row2 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row3 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+  var row4 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row5 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row6 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+  var row7 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row8 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row9 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+  var row10 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row11 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row12 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+  var row_dup1 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row_dup2 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row_dup3 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+  var row_dup4 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row_dup5 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row_dup6 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+  var row_dup7 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row_dup8 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row_dup9 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+  var row_dup10 = new int[]{4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4, 4, 8, (-4), 4};
+  var row_dup11 = new int[]{3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11, 3, 8, 5, -11};
+  var row_dup12 = new int[]{-2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13, -2, 1, 12, 13};
+
+  var mat = new int[][]{ row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row_dup1, row_dup2, row_dup3, row_dup4, row_dup5, row_dup6, row_dup7, row_dup8, row_dup9, row_dup10, row_dup11, row_dup12 };
+  print_mat(bubbleSort(mat));
+  return 0; 
+}
+

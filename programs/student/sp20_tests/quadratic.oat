@@ -1,0 +1,312 @@
+/* This program does rational and complex arithmetic and solves quadratic equations */
+
+struct Rational {
+    int num;
+    int den
+}
+
+struct Complex {
+    Rational a;
+    Rational b
+}
+
+int abs(int a) {
+    if (a < 0) {
+        return -a;
+    }
+    return a;
+}
+
+/* gcd and mod are taken from gcd.oat, extended to handle negatives */
+int gcd(int a, int b) {
+    var pos = ((a >= 0 & b >= 0) | (a <= 0 & b <= 0));
+    a = abs(a);
+    b = abs(b);
+    while (b != 0) {
+        var t = b;
+        b = mod(a, b);
+        a = t;
+    }
+    if (pos) {
+        return a;
+    }
+    else {
+        return -a;
+    }
+}
+
+int mod (int a, int b) {
+  var t = a;
+  while (t - b >= 0) {
+      t = t - b;
+  }
+  return t;
+}
+
+/* inefficient division algorithm */
+int divide(int num, int den) {
+    var pos = ((num >= 0 & den >= 0) | (num <= 0 & den <= 0));
+    num = abs(num);
+    den = abs(den);
+    if (num < den) {
+        return 0;
+    }
+    var result = 1;
+    while((num - den) > 0) {
+        result = result + 1;
+        num = num - den;
+    }
+    if(pos) {
+        return result;
+    }
+    else {
+        return -result;
+    }
+}
+
+/* reduce a rational number so that the numerator and denominator are coprime */
+Rational reduce(Rational x) {
+    var g = gcd(x.num, x.den);
+    var newNum = divide(x.num, g);
+    var newDen = divide(x.den, g);
+    var pos = ((newNum >= 0 & newDen >= 0) | (newNum <= 0 & newDen <= 0));
+    newNum = abs(newNum);
+    newDen = abs(newDen);
+    if(!pos) {
+        newNum = -newNum;
+    }
+    return new Rational {num = newNum; den = newDen};
+}
+
+/* Rational multiplication */
+Rational q_multiply(Rational x, Rational y) {
+    var newNum = x.num * y.num;
+    var newDen = x.den * y.den;
+    var prod = new Rational {num = newNum; den = newDen};
+    return reduce(prod);
+}
+
+/* Rational addition */
+Rational q_add(Rational x, Rational y) {
+    var newXNum = x.num * y.den;
+    var newYNum = y.num * x.den;
+    var newNum = newXNum + newYNum;
+    var newDen = x.den * y.den;
+    var sum = new Rational {num = newNum; den = newDen};
+    return reduce(sum);
+}
+
+/* returns xc, where x in Q and c in Z \ {0} */
+Rational q_scalar_mult(Rational x, int c) {
+    var newNum = x.num * c;
+    var result = new Rational {num = newNum; den = x.den};
+    return reduce(result);
+}
+
+/* returns x(1/c), where x in Q and c in Z \ {0} */
+Rational q_scalar_div(Rational x, int c) {
+    var newDen = x.den * c;
+    var result = new Rational {num = x.num; den = newDen};
+    return reduce(result);
+}
+
+/* divide two rational numbers */
+Rational q_div(Rational x, Rational y) {
+    var reciprocal = new Rational {num = y.den; den = y.num};
+    return q_multiply(x, reciprocal);
+}
+
+/*return the integer constant x as a rational */
+Rational const(int x) {
+    return new Rational {num = x; den = 1};
+}
+
+/* add two complex numbers (with rational real and imaginary parts) */
+Complex c_add(Complex u, Complex v) {
+    var a1 = q_add(u.a, v.a);
+    var b1 = q_add(u.b, v.b);
+    return new Complex {a = a1; b = b1};
+}
+
+/* divide a complex number by an integer scalar */
+Complex c_scalar_div(Complex u, int c) {
+    var a1 = q_scalar_div(u.a, c);
+    var b1 = q_scalar_div(u.b, c);
+    return new Complex {a = a1; b = b1};
+}
+
+/* multiply a complex number by an integer scalar */
+Complex c_scalar_mult(Complex u, int c) {
+    var a1 = q_scalar_mult(u.a, c);
+    var b1 = q_scalar_mult(u.b, c);
+    return new Complex {a = a1; b = b1};
+}
+
+/* find the inverse of a complex number */
+Complex c_inverse(Complex u) {
+    var old_imag = u.b;
+    var new_imag = new Rational{ num = -old_imag.num; den =  old_imag.den};
+    var a_sq = q_multiply (u.a, u.a);
+    var b_sq = q_multiply (u.b, u.b);
+    var denom = q_add (a_sq, b_sq);
+    var a1 = q_div(u.a, denom);
+    var b1 = q_div(new_imag, denom);
+    return new Complex {a = a1; b = b1};
+}
+
+/* find the conjugate of a complex number */
+Complex c_conjugate(Complex u) {
+    var old_imag = u.b;
+    var new_imag = new Rational{ num = -old_imag.num; den =  old_imag.den};
+    return new Complex{a = u.a; b = new_imag};
+}
+
+/* multiply complex number (a+bi)(c+di) = (ac-bd) + i(ad+bc) */
+Complex c_mult(Complex u, Complex v) {
+    var a = u.a;
+    var b = u.b;
+    var c = v.a;
+    var d = v.b;
+    var ac = q_multiply(a, c);
+    var bd = q_multiply(b, d);
+    var ad = q_multiply(a, d);
+    var bc = q_multiply(b, c);
+    var bd_neg = new Rational {num = -bd.num; den = bd.den};
+    var real = q_add(ac, bd_neg);
+    var imag = q_add(ad, bc);
+    return new Complex{a = real; b = imag};
+}
+
+/* find sqrt(x), where x = +- a^2 for some a, result can be real or imaginary */
+Complex sqrt(int a) {
+    var pos = (a >= 0);
+    if (!pos) {
+        a = -a;
+    }
+    var i = 0;
+    while (i * i < a) {
+        i = i + 1;
+    }
+    if (pos) {
+        var a1 = const(i);
+        var b1 = const(0);
+        return new Complex {a = a1; b = b1};
+    }
+    else {
+        var a1 = const(0);
+        var b1 = const(i);
+        return new Complex {a = a1; b = b1};
+    }
+}
+
+/* solve the quadratic equation ax^2 + bx +c = 0, where roots are complex number with rational real and imaginary parts.
+    This function returns only one root */
+Complex solve_quadratic(int a, int b, int c) {
+    var square = b * b;
+    var fst = 4 * a;
+    var snd = fst * c;
+    var discr = square - snd;
+    /* need to calculate sqrt(b^2-4ac) */
+    var sqrt_disc = sqrt(discr);
+    /* denominator = 2a */
+    var denom = 2 * a;
+    var q_fst = new Rational {num = -b; den = denom};
+    var q_fst_simpl = reduce(q_fst);
+    /* c_fst is -b / 2a + 0i */
+    var c_fst = new Complex {a = q_fst_simpl; b = const(0)};
+    /* c_snd is sqrt{b^2-4ac}/2a */
+    var c_snd = c_scalar_div(sqrt_disc, denom);
+    var result = c_add(c_fst, c_snd);
+    return result;
+}
+
+/* verify if complex number x is a solution to ax^2 + bx + c = 0 */
+bool verify_quadratic (int a, int b, int c, Complex x) {
+    var square = c_mult(x, x);
+    var fst = c_scalar_mult(square, a);
+    var snd = c_scalar_mult(x, b);
+    var trd = new Complex{a = const(c); b = const(0)};
+    var sum1 = c_add(fst, snd);
+    var sum2 = c_add(sum1, trd);
+    /* want result to be 0*/
+    return (sum2.a.num == 0 & sum2.b.num == 0);
+}
+
+/*print a rational number */
+void print_rational(Rational x) {
+    print_string("Num: ");
+    print_int(x.num);
+    print_string(" Den: ");
+    print_int(x.den);
+    print_string("\n");
+    return;
+}
+
+/* print a complex number */
+void print_complex(Complex u) {
+    print_string("Real Part: \n");
+    print_rational(u.a);
+    print_string("\nComplex Part: \n");
+    print_rational(u.b);
+    print_string("\n");
+    return;
+}
+
+
+int program(int argc, string[] args) {
+    /* this program solve and verifies quadratic equations with rational and complex roots and does complex number arithmetic */
+
+    /* a quadratic equation has the form x^2 - (sum of roots) x + (prod of roots) = 0 */
+    /* so if roots are a +- bi, get x^2 -2a + (a^2 + b^2) = 0 */
+    /* we run through this for 0 <= a <= 30 and 1 <= b <= 30 */
+    var x = 3;
+    var y = 4;
+    var z = x + y;
+    var as = new int[900];
+    var bs = new int[900];
+    var cs = new int[900];
+    for (var a = 0; a < 30; a = a + 1;) {
+        for(var b = 1; b < 30; b = b + 1;) {
+            var i = 30 * a + b;
+            as[i] = 1;
+            bs[i] = -2 * a;
+            cs[i] = (a * a + b * b);
+        }
+    }
+    var allCorrect = true;
+
+    for(var i = 0; i < length(as); i = i+ 1;) {
+        /* The first thing we check is that if a + bi is a solution to the equation, then so is a-bi.
+            Just to be safe, we check this 100 times */
+        for(var j = 0; j < 100; j = j + 1;) {
+            var soln = solve_quadratic (as[i], bs[i], cs[i]);
+            var conj = c_conjugate(soln);
+            if (!verify_quadratic(as[i], bs[i], cs[i], conj)) {
+                allCorrect = false;
+                print_int(bs[i]);
+                print_int(cs[i]);
+                print_string("\n");
+                print_complex(soln);
+            } 
+        }
+        
+        /* other test: c times its complex inverse is 1. We check this 300 times to be safe. */
+        for(var j = 0; j < 300; j = j + 1;) {
+            var soln = solve_quadratic (as[i], bs[i], cs[i]);
+            var inv = c_inverse(soln);
+            var prod= c_mult(soln, inv);
+            if(!(prod.b.num == 0 & prod.a.num == 1 & prod.a.den == 1)) {
+                allCorrect = false;
+                print_int(bs[i]);
+                print_int(cs[i]);
+                print_string("\n");
+                print_complex(soln);
+            }
+        }
+    }
+    if(allCorrect) {
+        return z * z;
+    }
+    return y - x;
+
+}

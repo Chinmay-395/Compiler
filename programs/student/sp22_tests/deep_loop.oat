@@ -1,0 +1,16 @@
+int deep_for_loop(int a, int b, int c) {
+  var sum = 0;
+  for (var i = 0; i * i < a; i = i + 1;) {
+    for (var j = 0; j * j < b; j = j + 1;) {
+      for (var k = 0; k * k < c; k = k + 1;) {
+        sum = sum + 1;
+      }
+    }
+  }
+  return sum;
+}
+
+int program(int argc, string[] argv) {
+  print_int(deep_for_loop(1000000, 1000000, 1000000));
+  return 0;
+}

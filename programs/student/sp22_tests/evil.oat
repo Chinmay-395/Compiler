@@ -1,0 +1,80 @@
+int pow (int a, int b) {
+    var out = 1; 
+    while (b != 0) {
+        out = out * a;
+        b = b - 1;
+    }
+    return out;
+}
+
+int remainder (int a, int b) {
+    if (b == 0) {
+        print_string("Can't divide by 0");
+        return -1;
+    }
+
+    while (a >= b) {
+        a = a - b;
+    }
+
+    return a;
+}
+
+int divide (int a, int b) {
+    if (b == 0) {
+        print_string("Can't divide by 0");
+        return -1;
+    }
+
+    var out = 0;
+    while (a >= b) {
+        a = a - b;
+        out = out + 1;
+    }
+
+    return out;
+}
+
+int is_evil (int a) {
+    if (a < 0) {
+        return 0;
+    }
+    var cont = true; 
+    var y = 0; 
+    var num1 = 0; 
+    var num2 = 0; 
+    var r = 0;
+    var remctr = 0; 
+    while (cont) {
+        num1 = pow(2, y); 
+        r = remainder(a, num1);
+        if (r == a) {
+            cont = false;
+        } else {
+            y = y + 1;
+        }
+    }
+    for (var i = 0; i < y; i = i + 1;) {
+        num1 = pow(2, i);
+        num2 = divide(a, num1);
+        if (remainder(num2, 2) == 1) {
+            remctr = remctr + 1;
+        }
+    }
+    if (remainder(remctr, 2) == 0) {
+        return 1; 
+    }
+    return 0;
+}
+
+int count_evil(int num1, int num2) {
+    var count = 0; 
+    for(var i = num1; i <= num2; i = i + 1;) {
+        count = count + is_evil(i);
+    }
+    return count;
+}
+
+int program(int argc, string[] argv) {
+    return count_evil(1, 10000);
+}

@@ -1,0 +1,68 @@
+/* uses a single function scope to make the difference between greedy and better regalloc more dramatic */
+int program (int argc, string[] argv) {
+    for (var i = 1; i <= 100000; i = i + 1;) {
+        /* 
+        computes the general fizzbuzz of n. 
+        first argument should be the length of argv
+        argv should have an unused element at index 0,
+        and then contiguous pairs of strings of integers and their replacements. 
+        (e.g. pass "3 fizz 5 buzz" as command line arguments for classic fizzbuzz)
+        */
+        /* string generalFizzBuzz(int argc, string[] argv, int n) { */
+            var n = i;
+
+            var generalFizzBuzz_result = "";
+
+            for (var j = 1; j < argc; j = j + 2;) {
+                var modulo_base = argv[j];
+
+
+                /* naive string-to-int conversion */
+                /* int int_of_string(string int_of_string_s) { */
+                    var int_of_string_s = modulo_base;
+            
+                    var int_of_string_result = 0;
+                    var int_of_string_chars = array_of_string(int_of_string_s);
+
+                    for (var int_of_string_i = 0; int_of_string_i < length_of_string(int_of_string_s); int_of_string_i = int_of_string_i + 1;) {
+                        int_of_string_result = int_of_string_result * 10;
+                        /* ascii('0') == 48 */
+                        int_of_string_result = int_of_string_result + int_of_string_chars[int_of_string_i] - 48;
+                    }
+                /* } */
+
+                /* returns true if a is a multiple of b. naive */
+                /* bool is_multiple_of(int is_multiple_of_a, int is_multiple_of_b) { */
+                    var is_multiple_of_a = n;
+                    var is_multiple_of_b = int_of_string_result;
+
+                    var is_multiple_of_shouldContinue = true;
+                    var is_multiple_of_result = true;
+                    for (var is_multiple_of_i = 0; is_multiple_of_shouldContinue; is_multiple_of_i = is_multiple_of_i + 1;) {
+                        if (is_multiple_of_b * is_multiple_of_i > is_multiple_of_a) {
+                            is_multiple_of_result = false;
+                            is_multiple_of_shouldContinue = false;
+                        }
+                        if (is_multiple_of_b * is_multiple_of_i == is_multiple_of_a) {
+                            is_multiple_of_result = true;
+                            is_multiple_of_shouldContinue = false;
+                        }
+                    }
+
+                /* } */ 
+                if (is_multiple_of_result) {
+                    generalFizzBuzz_result = string_cat(generalFizzBuzz_result, argv[j + 1]);
+                }
+            }
+
+            if (length_of_string(generalFizzBuzz_result) == 0) {
+                generalFizzBuzz_result = string_of_int(n);
+            }
+        /* } */
+
+        /* print_string(generalFizzBuzz_result); */
+        /* print_string("\n"); */
+    }
+
+    return 0;
+}

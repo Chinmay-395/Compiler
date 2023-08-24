@@ -1,0 +1,122 @@
+-- Name:Tanay Shah 
+-- CWID: 20010666
+-- q1
+with monAverage as (
+	select prod, month, avg(quant) avgq
+	from sales
+	group by prod, month
+),
+bMonth as (
+	select a.prod, a.month, b.avgq as beforeAverage
+	from monAverage a left join monAverage b on a.prod = b.prod
+	and a.month = b.month+1
+	order by a.prod, a.month
+),
+aMonth as (
+	select a.prod, a.month, b.avgq as afterAverage
+	from monAverage a left join monAverage b on a.prod = b.prod
+	and a.month+1 = b.month
+	order by a.prod, a.month
+),
+aux as (
+	select a.prod, a.month, b.beforeAverage, c.afterAverage
+	from monAverage a, bMonth b, aMonth c
+	where a.prod = b.prod and a.month = b.month and b.prod = c.prod and c.month = b.month
+	order by a.prod, a.month
+)
+
+select h.prod as "PRODUCT", h.month as "MONTH", count(quant) as "SALES_COUNT_BETWEEN_AVERAGES"
+from aux h left join sales s on h.prod = s.prod and h.month = s.month and
+((quant between h.beforeAverage and h.afterAverage) or (quant between h.afterAverage and h.beforeAverage))
+group by h.prod, h.month
+order by h.prod, h.month
+
+--q2
+
+with comAverage as (
+	select cust, prod, month, (month+2)/3 as QRTR, quant
+	from sales
+),
+averageOfAll as (
+	select cust, prod, QRTR, avg(quant) as cmnAverage
+	from comAverage
+	group by cust, prod, QRTR
+),
+
+beforeAverage as (
+	select a.cust, a.prod, a.QRTR, a.cmnAverage, b.cmnAverage as beforeAverage
+	from averageOfAll a left join averageOfAll b on a.cust = b.cust and 
+	a.prod = b.prod and a.QRTR = b.QRTR+1
+),
+afterAverage as (
+	select a.cust, a.prod, a.QRTR, a.cmnAverage, b.cmnAverage as afterAverage
+	from averageOfAll a left join averageOfAll b on a.cust = b.cust and 
+	a.prod = b.prod and a.QRTR+1 = b.QRTR
+)
+
+select a.cust as "CUSTOMER", a.prod as "PRODUCT", a.QRTR as "QRTR",
+	a.beforeAverage as "BEFORE_AVERAGE", a.cmnAverage as "DURING_AVERAGE", b.afterAverage as "AFTER_AVERAGE"
+	from beforeAverage as a full outer join afterAverage as b on a.cust = b.cust and a.prod = b.prod and
+	a.QRTR = b.QRTR
+	order by a.cust, a.prod, a.QRTR
+
+-- q3
+
+with sAverage as (
+	select cust, prod, state, avg(quant) as avgQ
+	from sales
+	group by cust, prod, state
+),
+otherCustomerAverage as (
+	select a.cust, a.prod, a.state, avg(s.quant) as otherCustomerAverage
+	from sAverage a, sales s
+	where a.cust <> s.cust and a.prod = s.prod and a.state = s.state
+	group by a.cust, a.prod, a.state
+),
+
+otherProductAverage as (
+	select a.cust, a.prod, a.state, avg(s.quant) as otherProductAverage
+	from sAverage a, sales s
+	where a.prod <> s.prod and a.cust = s.cust and a.state = s.state
+	group by a.cust, a.prod, a.state
+)
+
+select a.cust as "CUSTOMER", a.prod as "PRODUCT", a.state as "STATE", a.avgQ as "PROD_AVERAGE",
+		b.otherCustomerAverage as "OTHER_CUST_AVERAGE", c.otherProductAverage as "OTHER_PROD_AVERAGE"
+from sAverage a, otherCustomerAverage b, otherProductAverage c
+where a.cust = b.cust and b.cust = c.cust
+and a.prod = b.prod and b.prod = c.prod
+and a.state = b.state and b.state = c.state
+
+-- q4
+
+with cntTB as (
+	select prod, quant, count(quant) as count_quant
+	from sales
+	group by prod, quant
+	order by prod, quant
+),
+
+rCnt as (
+	select a.prod, a.quant, sum(b.count_quant) as frequency
+	from cntTB a, cntTB b
+	where a.prod = b.prod and b.quant <= a.quant
+	group by a.prod, a.quant
+),
+
+mInd as (
+	select prod, max(frequency)/2 as median_frequency
+	from rCnt
+	group by prod
+),
+
+mQuant as (
+	select r.prod, r.quant
+	from rCnt r, mInd m
+	where r.prod = m.prod and r.frequency >= median_frequency
+)
+
+select prod as "PRODUCT", min(quant) as "MEDIAN QUANT" 
+from mQuant m
+group by prod
+order by prod

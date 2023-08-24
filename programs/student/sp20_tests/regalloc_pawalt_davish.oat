@@ -1,0 +1,29 @@
+
+int program(int argc, string[] argv) {
+    var a = 0;
+    var b = 2;
+    var c = 3;
+    var d = 4;
+    var e = 5;
+    var f = 6;
+    var g = 7;
+    var h = 8;
+    var i = 9;
+    var j = 9;
+    var k = 9;
+    var l = 9;
+
+    var sum = 0;
+    var m = 42;
+    var n = 42;
+    var o = 42;
+    var p = 42;
+    var q = 42;
+    var r = 42;
+    var s = 42;
+    for (var i = 0; i < 1000000000; i = i + 1;) {
+        sum = sum + m + n + o + p + q + r + s;
+    }
+
+    return sum + a + b + c + d + e + f + g + h + i + j + k + l;
+}

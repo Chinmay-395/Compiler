@@ -1,0 +1,34 @@
+int longest_increasing_subsequence(int[] arr) {
+  var n = length(arr);
+	var dp = new int[n];
+	var max_subsequence = 0;
+	
+	for (var i = 0; i < n; i = i+1;) {
+		dp[i] = 1;
+		var max_seq = 0;
+		for (var j = 0; j < i; j = j+1;) {
+			if (arr[i] > arr[j] & dp[j] > max_seq) {
+				max_seq = dp[j];
+			}
+		}
+		dp[i] = max_seq + 1;
+		
+		if (dp[i] > max_subsequence) {
+			max_subsequence = dp[i];
+		}
+	}
+	
+	return max_subsequence;
+}
+
+int program(int argc, string[] argv) {
+  var arr = new int[] {1, 3, 8, 10, 13, 401, 21, 34, 1231, 12, 3, 424, 3, 1234, 23, 6234, 524, 523, 6345, 63};
+  var res = longest_increasing_subsequence(arr);
+  
+  for (var i = 0; i < 100000; i = i + 1;) {
+    var temp = longest_increasing_subsequence(arr);
+  }
+
+  print_string(string_of_int(res));
+	return res;
+}

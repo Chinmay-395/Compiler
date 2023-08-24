@@ -1,0 +1,42 @@
+int[] cocktailsort(int[] a, int size) {
+    var swapped = true;
+    var start = 0;
+    var end = size - 1;
+  
+    while (swapped) {
+        swapped = false;
+        for (var i = start; i < end; i = i + 1;) {
+            var cur = a[i];
+            var nxt = a[i + 1];
+            if (cur > nxt) {
+                var temp = a[i];
+                a[i] = a[i + 1];
+                a[i + 1] = temp;
+                swapped = true;
+            }
+        }
+
+        if (swapped) {
+            swapped = false;
+            end = end - 1;
+            for (var i = end - 1; i >= start; i = i - 1;) {
+                var cur = a[i];
+                var nxt = a[i + 1];
+                if (cur > nxt) {
+                    var temp = a[i + 1];
+                    a[i + 1] = a[i];
+                    a[i] = temp;
+                    swapped = true;
+                }
+            }
+            start = start + 1;
+        }
+    }
+    return a;
+}
+
+int program(int argc, string[] argv) {
+  var array = new int[]{13, 42, 32, 3, 2, 6};
+  var result = cocktailsort(array, 6);
+  return result[5];
+}

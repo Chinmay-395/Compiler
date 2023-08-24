@@ -1,0 +1,53 @@
+int[][] convolve(int[][] m, int[][] kernel) {
+    var m_rows = length(m);
+    var m_cols = length(m[0]);
+
+    var k_rows = length(kernel);
+    var k_cols = length(kernel[0]);
+
+    var new_rows = m_rows - k_rows + 1;
+    var new_cols = m_cols - k_cols + 1;
+
+    var ret = new int[][new_rows]{i -> new int[new_cols]{j -> 0}};
+    for (var row = 0; row < new_rows; row = row+1;) {
+        for (var col = 0; col < new_cols; col = col+1;) {
+            var sum = 0;
+            for (var cur_row_offset = 0; cur_row_offset < k_rows; cur_row_offset = cur_row_offset+ 1;) {
+                for (var cur_col_offset = 0; cur_col_offset < k_cols; cur_col_offset = cur_col_offset+ 1;) {
+                    sum = sum + (m[row + cur_row_offset][col + cur_col_offset] * kernel[cur_row_offset][cur_col_offset]); 
+                }
+            }
+            ret[row][col] = sum;
+        }
+    }
+    return ret;
+}
+
+int sum(int[][] m) {
+    var rows = length(m);
+    var cols = length(m[0]);
+
+    var sum = 0;
+
+    for (var i = 0; i < rows; i = i+1;) {
+        for (var j = 0; j < cols; j = j + 1;) {
+            sum = sum + m[i][j];
+        } 
+    }
+
+    return sum;
+}
+
+int program(int argc, string[] argv) {
+    var m = new int[][1000]{i -> new int[10000]{j -> i + j}};
+    var kernel = new int[][]{
+        new int[]{1, 1, 1},
+        new int[]{0, 0, 0},
+        new int[]{1, 1, 1}
+    };
+    var convolved = convolve(m, kernel);
+    var sum_ret = sum(convolved);
+    print_int(sum_ret);
+    print_string("\n");
+    return sum_ret;
+}
